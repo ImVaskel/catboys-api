@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "catboys"
+version = "0.1.0"
+description = "A catboy api inspired by the https://nekos.best api."
+authors = ["ImVaskel <49348256+ImVaskel@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poe.tasks]
+dev = "uvicorn catboys.app.application:make_app --reload"
+check = "ruff check catboys"
+lint = "pyright catboys"
+bot = "python3 catboys/bot/bot.py"
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+sqlalchemy = "^2.0.20"
+pydantic-settings = "^2.0.3"
+discord-py = {extras = ["speed"], version = "^2.3.2"}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+ruff = "^0.0.287"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
