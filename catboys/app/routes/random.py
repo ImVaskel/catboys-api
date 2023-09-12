@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy import func, select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from catboys.db import models
 
 from catboys.db.dependency import get_db
@@ -23,7 +23,10 @@ class RandomCatboy(BaseModel):
 
 @router.get("/")
 async def random_catboy(
-    limit: int = 1, db: Session = Depends(get_db)
+    limit: int = 1, db: AsyncSession = Depends(get_db)
 ) -> list[RandomCatboy]:
-    catboys = db.query(models.Media).order_by(func.random()).limit(limit).all()
-    return catboys
+    catboys = await db.execute(
+        select(models.Media).order_by(func.random()).limit(limit)
+    )
+
+    return catboys.scalars().all()

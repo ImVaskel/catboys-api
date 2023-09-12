@@ -19,7 +19,9 @@ fastapi = "^0.103.1"
 uvicorn = {extras = ["standard"], version = "^0.23.2"}
 sqlalchemy = "^2.0.20"
 pydantic-settings = "^2.0.3"
-discord-py = {extras = ["speed"], version = "^2.3.2"}
+discord-py = {git = "https://github.com/rapptz/discord.py"}
+jishaku = "^2.5.1"
+asyncpg = "^0.28.0"
 
 
 [tool.poetry.group.dev.dependencies]

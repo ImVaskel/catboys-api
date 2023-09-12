@@ -13,6 +13,7 @@ def make_app():
 
     @app.on_event("startup")
     async def on_startup():
-        base.Base.metadata.create_all(bind=engine)
+        async with engine.begin() as conn:
+            await conn.run_sync(base.Base.metadata.create_all)
 
     return app

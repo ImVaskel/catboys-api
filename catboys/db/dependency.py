@@ -1,9 +1,7 @@
-from catboys.db import SessionLocal
+from catboys.db import async_session
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def get_db():
+    async with async_session() as session:
+        async with session.begin():
+            yield session
